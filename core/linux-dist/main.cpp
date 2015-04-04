@@ -682,6 +682,38 @@ void clean_exit(int sig_num) {
 	}
 }
 
+#ifdef TARGET_RPI
+
+#include <sys/soundcard.h>
+
+static int audio_fd = -1;
+
+void init_sound()
+{
+    if((audio_fd=open("/dev/dsp",O_WRONLY))<0)
+                printf("Couldn't open /dev/dsp.\n");
+    else
+        {
+          printf("sound enabled, dsp openned for write\n");
+          int tmp=44100;
+          int err_ret;
+          err_ret=ioctl(audio_fd,SNDCTL_DSP_SPEED,&tmp);
+          printf("set Frequency to %i, return %i (rate=%i)\n", 44100, err_ret, tmp);
+          int channels=2;
+          err_ret=ioctl(audio_fd, SNDCTL_DSP_CHANNELS, &channels);
+          printf("set dsp to stereo (%i => %i)\n", channels, err_ret);
+          int format=AFMT_S16_LE;
+          err_ret=ioctl(audio_fd, SNDCTL_DSP_SETFMT, &format);
+          printf("set dsp to %s audio (%i/%i => %i)\n", "16bits signed" ,AFMT_S16_LE, format, err_ret);
+        }
+}
+
+void clean_exit(int sig_num) {
+        if(audio_fd>=0) close(audio_fd);
+}
+
+#endif
+
 void init_sound()
 {
     if((audio_fd=open("/dev/dsp",O_WRONLY))<0)
@@ -713,7 +745,7 @@ int main(int argc, wchar* argv[])
 	personality(~READ_IMPLIES_EXEC&personality(0xFFFFFFFF));
 	printf("Updated personality: %08X\n", personality(0xFFFFFFFF));
 	if (setup_curses() < 0) die("failed to setup curses!\n");
-#ifdef TARGET_PANDORA
+#if defined  TARGET_PANDORA || defined TARGET_RPI
 	signal(SIGSEGV, clean_exit);
 	signal(SIGKILL, clean_exit);
 	
@@ -746,7 +778,7 @@ int main(int argc, wchar* argv[])
 
 	dc_run();
 	
-#ifdef TARGET_PANDORA
+#if defined  TARGET_PANDORA || defined TARGET_RPI
 	clean_exit(0);
 #endif
 
@@ -755,7 +787,7 @@ int main(int argc, wchar* argv[])
 
 u32 os_Push(void* frame, u32 samples, bool wait)
 {
-#ifdef TARGET_PANDORA
+#if defined  TARGET_PANDORA || defined TARGET_RPI
 	write(audio_fd, frame, samples*4);
 #endif
 return 1;
