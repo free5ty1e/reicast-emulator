@@ -682,6 +682,27 @@ void clean_exit(int sig_num) {
 	}
 }
 
+void init_sound()
+{
+    if((audio_fd=open("/dev/dsp",O_WRONLY))<0)
+		printf("Couldn't open /dev/dsp.\n");
+    else
+	{
+	  printf("sound enabled, dsp openned for write\n");
+	  int tmp=44100;
+	  int err_ret;
+	  err_ret=ioctl(audio_fd,SNDCTL_DSP_SPEED,&tmp);
+	  printf("set Frequency to %i, return %i (rate=%i)\n", 44100, err_ret, tmp);
+	  int channels=2;
+	  err_ret=ioctl(audio_fd, SNDCTL_DSP_CHANNELS, &channels);	  
+	  printf("set dsp to stereo (%i => %i)\n", channels, err_ret);
+	  int format=AFMT_S16_LE;
+	  err_ret=ioctl(audio_fd, SNDCTL_DSP_SETFMT, &format);
+	  printf("set dsp to %s audio (%i/%i => %i)\n", "16bits signed" ,AFMT_S16_LE, format, err_ret);
+	}
+}
+#endif
+
 #ifdef TARGET_RPI
 
 #include <sys/soundcard.h>
@@ -712,27 +733,6 @@ void clean_exit(int sig_num) {
         if(audio_fd>=0) close(audio_fd);
 }
 
-#endif
-
-void init_sound()
-{
-    if((audio_fd=open("/dev/dsp",O_WRONLY))<0)
-		printf("Couldn't open /dev/dsp.\n");
-    else
-	{
-	  printf("sound enabled, dsp openned for write\n");
-	  int tmp=44100;
-	  int err_ret;
-	  err_ret=ioctl(audio_fd,SNDCTL_DSP_SPEED,&tmp);
-	  printf("set Frequency to %i, return %i (rate=%i)\n", 44100, err_ret, tmp);
-	  int channels=2;
-	  err_ret=ioctl(audio_fd, SNDCTL_DSP_CHANNELS, &channels);	  
-	  printf("set dsp to stereo (%i => %i)\n", channels, err_ret);
-	  int format=AFMT_S16_LE;
-	  err_ret=ioctl(audio_fd, SNDCTL_DSP_SETFMT, &format);
-	  printf("set dsp to %s audio (%i/%i => %i)\n", "16bits signed" ,AFMT_S16_LE, format, err_ret);
-	}
-}
 #endif
 
 int main(int argc, wchar* argv[])
