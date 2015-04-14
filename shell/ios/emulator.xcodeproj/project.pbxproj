@@ -550,6 +550,7 @@
 		9C7A3A7118C806E00070BB5F /* gl3platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl3platform.h; sourceTree = "<group>"; };
 		9C7A3A7318C806E00070BB5F /* khrplatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = khrplatform.h; sourceTree = "<group>"; };
 		9C7A3A7C18C806E00070BB5F /* nullDC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nullDC.cpp; sourceTree = "<group>"; };
+		9C7A3A8018C806E00070BB5F /* audiostream_rif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audiostream_rif.h; sourceTree = "<group>"; };
 		9C7A3A8418C806E00070BB5F /* profiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = profiler.cpp; sourceTree = "<group>"; };
 		9C7A3A8518C806E00070BB5F /* profiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = profiler.h; sourceTree = "<group>"; };
 		9C7A3A8618C806E00070BB5F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };

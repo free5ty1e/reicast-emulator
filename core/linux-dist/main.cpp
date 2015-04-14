@@ -142,9 +142,6 @@ char stringConvertScratch[32];
 
 bool configOk = false;
 
-#ifdef TARGET_PANDORA
-static int audio_fd = -1;
-#endif
 
 #define MAP_SIZE 32
 
@@ -909,7 +906,6 @@ void clean_exit(int sig_num) {
     if (JoyFD[2] >= 0) close(JoyFD[2]);
     if (JoyFD[3] >= 0) close(JoyFD[3]);
     if (kbfd >= 0) close(kbfd);
-    if (audio_fd >= 0) close(audio_fd);
 
     // Close EGL context ???
     if (sig_num != 0)
@@ -932,24 +928,6 @@ void clean_exit(int sig_num) {
         size = backtrace(array, 10);
         backtrace_symbols_fd(array, size, STDERR_FILENO);
         exit(1);
-    }
-}
-
-void init_sound() {
-    if ((audio_fd = open("/dev/dsp", O_WRONLY)) < 0) {
-        printf("Couldn't open /dev/dsp.\n");
-    } else {
-        printf("sound enabled, dsp openned for write\n");
-        int tmp = 44100;
-        int err_ret;
-        err_ret = ioctl(audio_fd, SNDCTL_DSP_SPEED, &tmp);
-        printf("set Frequency to %i, return %i (rate=%i)\n", 44100, err_ret, tmp);
-        int channels = 2;
-        err_ret = ioctl(audio_fd, SNDCTL_DSP_CHANNELS, &channels);
-        printf("set dsp to stereo (%i => %i)\n", channels, err_ret);
-        int format = AFMT_S16_LE;
-        err_ret = ioctl(audio_fd, SNDCTL_DSP_SETFMT, &format);
-        printf("set dsp to %s audio (%i/%i => %i)\n", "16bits signed", AFMT_S16_LE, format, err_ret);
     }
 }
 #endif
@@ -996,11 +974,7 @@ int main(int argc, wchar* argv[]) {
 #if defined  TARGET_PANDORA || defined TARGET_RPI
     signal(SIGSEGV, clean_exit);
     signal(SIGKILL, clean_exit);
-
-    init_sound();
-#else
-    void os_InitAudio();
-    os_InitAudio();
+	
 #endif
 
     //TODO: Determine if this causes issues parsing here and still allowing dc_init() to do it too...
@@ -1069,31 +1043,13 @@ int main(int argc, wchar* argv[]) {
     return 0;
 }
 
-u32 alsa_Push(void* frame, u32 samples, bool wait);
-
-u32 os_Push(void* frame, u32 samples, bool wait) {
-#ifdef TARGET_PANDORA
-    int audio_fd = -1;
 #endif
 
-    if (audio_fd > 0) {
-        write(audio_fd, frame, samples * 4);
-    } else {
-        return alsa_Push(frame, samples, wait);
-    }
+int get_mic_data(u8* buffer) { return 0; }
+int push_vmu_screen(u8* buffer) { return 0; }
 
-    return 1;
-}
-#endif
 
-int get_mic_data(u8 * buffer) {
-    return 0;
-}
-
-int push_vmu_screen(u8 * buffer) {
-    return 0;
-}
-
-void os_DebugBreak() {
+void os_DebugBreak()
+{
     raise(SIGTRAP);
 }
