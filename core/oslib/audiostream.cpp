@@ -97,7 +97,11 @@ void WriteSample(s16 r, s16 l)
 
 void InitAudio()
 {
+#ifdef TARGET_RPI
+        time_diff=128/22050.0;
+#else
 	time_diff=128/44100.0;
+#endif
 }
 
 void TermAudio()

@@ -138,7 +138,11 @@ void os_InitAudio()
 	}
 
 	/* 44100 bits/second sampling rate (CD quality) */
-	val = 44100;
+#ifdef TARGET_RPI
+	val = 22050;    //Trying 22050Hz rate to attempt and smooth out the RPI2 audio
+#else
+        val = 44100;
+#endif
 	rc=snd_pcm_hw_params_set_rate_near(handle, params, &val, &dir);
 	if (rc < 0)
 	{
@@ -147,7 +151,11 @@ void os_InitAudio()
 	}
 
 	/* Set period size to settings.aica.BufferSize frames. */
+#ifdef TARGET_RPI
+        frames = 1024;
+#else   
 	frames = 2 * 1024;//settings.aica.BufferSize;
+#endif
 	rc=snd_pcm_hw_params_set_period_size_near(handle, params, &frames, &dir);
 	if (rc < 0)
 	{
