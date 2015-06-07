@@ -97,8 +97,7 @@ void prof_periodical()
 	samples_gen=0;
 	return;
 
-//	printf("PLD G: %.2f, WB G %.2f, PLD F: %.2f, WB F: %.2f\n"	,ralst[0]/1000000.0,ralst[2]/1000000.0
-																,ralst[1]/1000000.0,ralst[3]/1000000.0);
+//	printf("PLD G: %.2f, WB G %.2f, PLD F: %.2f, WB F: %.2f\n"	,ralst[0]/1000000.0,ralst[2]/1000000.0,ralst[1]/1000000.0,ralst[3]/1000000.0);
 	memset(ralst,0,sizeof(ralst));
 	return;
 
