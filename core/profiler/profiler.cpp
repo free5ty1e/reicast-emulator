@@ -83,8 +83,9 @@ void prof_periodical()
 
 	return;
 
-	printf("TA_VTXC %d,TA_SPRC %d,TA_EOSC %d,TA_PPC %d,TA_SPC %d,TA_EOLC %d,TA_V64HC %d\n", TA_VTXC,TA_SPRC,TA_EOSC,TA_PPC,TA_SPC,TA_EOLC,TA_V64HC);
+/**	printf("TA_VTXC %d,TA_SPRC %d,TA_EOSC %d,TA_PPC %d,TA_SPC %d,TA_EOLC %d,TA_V64HC %d\n", TA_VTXC,TA_SPRC,TA_EOSC,TA_PPC,TA_SPC,TA_EOLC,TA_V64HC);
 	TA_VTXC=TA_SPRC=TA_EOSC=TA_PPC=TA_SPC=TA_EOLC=TA_V64HC=0;
+ */
 
 
 
@@ -95,20 +96,20 @@ void prof_periodical()
 		return;
 	#endif
 
-	printf("Samples Gen: %.2f %.2f\n",samples_gen/1000.0,samples_gen/44100.0);
+//	printf("Samples Gen: %.2f %.2f\n",samples_gen/1000.0,samples_gen/44100.0);
 	samples_gen=0;
 	return;
 
-	printf("PLD G: %.2f, WB G %.2f, PLD F: %.2f, WB F: %.2f\n"	,ralst[0]/1000000.0,ralst[2]/1000000.0
+//	printf("PLD G: %.2f, WB G %.2f, PLD F: %.2f, WB F: %.2f\n"	,ralst[0]/1000000.0,ralst[2]/1000000.0
 																,ralst[1]/1000000.0,ralst[3]/1000000.0);
 	memset(ralst,0,sizeof(ralst));
 	return;
 
-	printf("READMV 431: %.2fm\n",vrml_431/1000.0/1000.0);
+//	printf("READMV 431: %.2fm\n",vrml_431/1000.0/1000.0);
 	vrml_431=0;
 	if (nfb+ffb+bfb+mfb)
 	{
-		printf("n:%d, f:%d, m:%d, b:%d || %.2f:1\n",nfb,ffb,mfb,bfb,(float)nfb/(mfb+ffb+bfb));
+//		printf("n:%d, f:%d, m:%d, b:%d || %.2f:1\n",nfb,ffb,mfb,bfb,(float)nfb/(mfb+ffb+bfb));
 		mfb=bfb=nfb=ffb=0;
 	}
 	return;
@@ -186,7 +187,7 @@ void prof_periodical()
 		qsort(&stuff[0],stuff.size(),sizeof(stuff[0]),stuffcmp);
 		for (u32 i=0;i<10 && i<stuff.size();i++)
 		{
-			printf("%05I64u :%04X %s\n",stuff[i].fallbacks,stuff[i].rez,stuff[i].diss);
+//			printf("%05I64u :%04X %s\n",stuff[i].fallbacks,stuff[i].rez,stuff[i].diss);
 		}
 	}
 
@@ -195,7 +196,7 @@ void prof_periodical()
 		opcodes[i].fallbacks=0;
 	}
 
-	printf("********************\n");
+//	printf("********************\n");
 	memset(&prof.counters,0,sizeof(prof.counters));
 }
 #else
