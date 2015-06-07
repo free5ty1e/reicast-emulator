@@ -83,11 +83,8 @@ void prof_periodical()
 
 	return;
 
-/**	printf("TA_VTXC %d,TA_SPRC %d,TA_EOSC %d,TA_PPC %d,TA_SPC %d,TA_EOLC %d,TA_V64HC %d\n", TA_VTXC,TA_SPRC,TA_EOSC,TA_PPC,TA_SPC,TA_EOLC,TA_V64HC);
+//	printf("TA_VTXC %d,TA_SPRC %d,TA_EOSC %d,TA_PPC %d,TA_SPC %d,TA_EOLC %d,TA_V64HC %d\n", TA_VTXC,TA_SPRC,TA_EOSC,TA_PPC,TA_SPC,TA_EOLC,TA_V64HC);
 	TA_VTXC=TA_SPRC=TA_EOSC=TA_PPC=TA_SPC=TA_EOLC=TA_V64HC=0;
- */
-
-
 
 	//for (u32 i=0;i<all_blocks
 	return;
@@ -164,7 +161,7 @@ void prof_periodical()
 		double v=prof.counters.shil.executed[i]/1000.0/1000.0;
 		prof.counters.shil.executed[i]=0;
 		if (v>0.05)
-			printf("%s: %.2fM\n",shil_opcode_name(i),v);
+//			printf("%s: %.2fM\n",shil_opcode_name(i),v);
 	}
 
 	
@@ -174,7 +171,7 @@ void prof_periodical()
 		prof.counters.print();
 	}
 
-	printf("opcode fallbacks:\n");
+//	printf("opcode fallbacks:\n");
 	vector<sh4_opcodelistentry> stuff;
 	for (u32 i=0;opcodes[i].oph;i++)
 	{
