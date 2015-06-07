@@ -159,7 +159,7 @@ void prof_periodical()
 	{
 		double v=prof.counters.shil.executed[i]/1000.0/1000.0;
 		prof.counters.shil.executed[i]=0;
-		if (v>0.05)
+//		if (v>0.05)
 //			printf("%s: %.2fM\n",shil_opcode_name(i),v);
 	}
 
