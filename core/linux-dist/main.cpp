@@ -1072,8 +1072,7 @@ int main(int argc, wchar* argv[]) {
 u32 alsa_Push(void* frame, u32 samples, bool wait);
 
 u32 os_Push(void* frame, u32 samples, bool wait) {
-//#ifdef TARGET_PANDORA
-#if defined  TARGET_PANDORA || defined TARGET_RPI
+#ifdef TARGET_PANDORA
     int audio_fd = -1;
 #endif
 
