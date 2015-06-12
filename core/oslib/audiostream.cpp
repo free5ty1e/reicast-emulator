@@ -5,7 +5,7 @@
 //cResetEvent speed_limit(true,true);
 
 struct SoundFrame { s16 l;s16 r; };
-#define SAMPLE_COUNT 1024
+#define SAMPLE_COUNT 512
 
 SoundFrame RingBuffer[SAMPLE_COUNT];
 const u32 RingBufferByteSize = sizeof(RingBuffer);
