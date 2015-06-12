@@ -1077,8 +1077,7 @@ u32 os_Push(void* frame, u32 samples, bool wait) {
 #endif
 
     if (audio_fd > 0) {
-//        write(audio_fd, frame, samples * 4);
-        write(audio_fd, frame, samples);
+        write(audio_fd, frame, samples * 4);
     } else {
         return alsa_Push(frame, samples, wait);
     }
