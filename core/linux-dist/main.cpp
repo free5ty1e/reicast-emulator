@@ -1004,13 +1004,13 @@ int main(int argc, wchar* argv[]) {
 #endif
 
     //TODO: Determine if this causes issues parsing here and still allowing dc_init() to do it too...
-    ParseCommandLine(argc,argv);
-    
+    ParseCommandLine(argc, argv);
+
 #if defined(USES_HOMEDIR) && HOST_OS != OS_DARWIN
-    
+
     string home = (string) getenv("HOME");
     if (cfgOpen()) {
-        
+
         string cfgHome = cfgLoadStr("config", "homedir", NULL);
         if (!cfgHome.empty()) {
             printf("Custom homedir found: %s, ", cfgHome.c_str());
@@ -1072,7 +1072,8 @@ int main(int argc, wchar* argv[]) {
 u32 alsa_Push(void* frame, u32 samples, bool wait);
 
 u32 os_Push(void* frame, u32 samples, bool wait) {
-#ifdef TARGET_PANDORA
+//#ifdef TARGET_PANDORA
+#if defined  TARGET_PANDORA || defined TARGET_RPI
     int audio_fd = -1;
 #endif
 
